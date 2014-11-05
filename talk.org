@@ -13,7 +13,7 @@ Who am I?
 
 Why am I here?
 
-* Please stop me for questions
+* Please ask questions!
 
 * Why are Design Patterns?
 
@@ -42,11 +42,12 @@ techniques to solve it.
 
 A. Aho and J. Ullman, 1992
 
-* A metaphor from building
+* A metaphor from architecture
 
 * The keystone pattern
 
-Provides a solution to the common pattern of supporting a structure
+Provides a solution to a common requirement for getting an arch to
+bear weight
 
 * It's an old idea
 
@@ -75,8 +76,6 @@ Allows you to benefit from the wisdom of many previous designers
 [[./images/gof.jpg]]
 
 [[./images/code-complete.jpg]]
-
-
 
 * When were they first popularized?
 
@@ -177,7 +176,6 @@ In general, there are only a few classes of patterns:
 
 ...and their implementation in Ruby
 
-- A creational pattern (Factory)
 - A behavioural pattern (Iterator)
 - Two structural patterns (Adapter, Decorator)
 
@@ -275,6 +273,7 @@ class TicketIterator
     @tickets_count = tickets_count
     @current_ticket = 0
   end
+
   def next
     @current_ticket += 1
     if @current_ticket <= @tickets_count
@@ -409,7 +408,7 @@ Internal iterators push the the elements to the client
 Mixins allow you to incorporate functionality into your class
 
 The Enumerable module contains all the functionality required to
-create an external iterator from your internal iterator.
+create an external iterator from your internal iterator
 
 It also provides a host of other useful methods
 
@@ -760,8 +759,7 @@ run ActionController::Dispatcher.new
 
 * Questions?
 
-* Slides available
-
+Slides available
 http://github.com/henrygarner/design-patterns.git
 
 * Homework
