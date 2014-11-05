@@ -1,0 +1,1333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Design Patterns</title>
+
+<link rel="stylesheet" href="./reveal.js/css/reveal.min.css"/>
+<link rel="stylesheet" href="./reveal.js/css/theme/moon.css" id="theme"/>
+<link rel="stylesheet" href="css/main.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section>
+<h1>Design Patterns</h1>
+<h2></h2>
+<h2><a href="mailto:"></a></h2>
+<h2></h2></section>
+
+<section>
+<section id="sec-1" >
+
+<h2>Welcome</h2>
+<p>
+Who am I?
+</p>
+
+<p>
+Why am I here?
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-2" >
+
+<h2>Please stop me for questions</h2>
+</section>
+
+</section>
+<section>
+<section id="sec-3" >
+
+<h2>Why are Design Patterns?</h2>
+<ul class="org-ul">
+<li>Express solutions to common problems
+</li>
+<li>Provide a higher level of abstraction when talking about code
+</li>
+<li>To discuss, weigh and record design tradeoffs
+</li>
+</ul>
+</section>
+
+</section>
+<section>
+<section id="sec-4" >
+
+<h2>Some motivating quotes</h2>
+<blockquote>
+Programs must be written for people to read, and only incidentally for
+machines to execute.
+</blockquote>
+
+<p>
+H. Abelson and G. Sussman, 1985
+</p>
+
+<blockquote>
+Computer Science is a science of abstraction - creating the right
+model for a problem and devising the appropriate mechanizable
+techniques to solve it.
+</blockquote>
+
+<p>
+A. Aho and J. Ullman, 1992
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-5" >
+
+<h2>A metaphor from building</h2>
+</section>
+
+</section>
+<section>
+<section id="sec-6" >
+
+<h2>The keystone pattern</h2>
+<p>
+Provides a solution to the common pattern of supporting a structure
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-7" >
+
+<h2>It's an old idea</h2>
+<img src="./images/keystones/roman.jpg" alt="roman.jpg" />
+</section>
+
+</section>
+<section>
+<section id="sec-8" >
+
+<h2>That's stood the test of time</h2>
+<img src="./images/keystones/bridge.jpg" alt="bridge.jpg" />
+</section>
+
+</section>
+<section>
+<section id="sec-9" >
+
+<h2>In many contexts</h2>
+<img src="./images/keystones/circular.jpg" alt="circular.jpg" />
+</section>
+
+</section>
+<section>
+<section id="sec-10" >
+
+<h2>And it can be applied in a general way</h2>
+<img src="./images/keystones/flat-arch.jpg" alt="flat-arch.jpg" />
+</section>
+
+</section>
+<section>
+<section id="sec-11" >
+
+<h2>Generalizations</h2>
+<p>
+It describes a general class of solution to a problem
+</p>
+
+<p>
+Allows you to benefit from the wisdom of many previous designers
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-12" >
+
+<h2>When were they first popularized?</h2>
+<img src="./images/gof.jpg" alt="gof.jpg" />
+
+<img src="./images/code-complete.jpg" alt="code-complete.jpg" />
+</section>
+
+
+
+</section>
+<section>
+<section id="sec-13" >
+
+<h2>When were they first popularized?</h2>
+<ul class="org-ul">
+<li>Code Complete - 1993 - Steven C. McConnell
+</li>
+<li>Elements of Reusable Object-Oriented Software - 1994 - Erich Gamma,
+Richard Helm, Ralph Johnson, John Vlissides
+</li>
+</ul>
+
+<p>
+Referred to as the Gang of Four (Gof)
+</p>
+
+<p>
+Classic textbooks!
+</p>
+
+<p>
+Before you think this is ancient history, remember Ruby appeared only
+a year or two later
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-14" >
+
+<h2>Key takeaways</h2>
+<ul class="org-ul">
+<li>Program to an interface not an implementation
+</li>
+<li>Favour object composition over class inheritance
+</li>
+</ul>
+</section>
+
+</section>
+<section>
+<section id="sec-15" >
+
+<h2>Important Nouns</h2>
+<ul class="org-ul">
+<li>Class
+</li>
+<li>Object
+</li>
+<li>Interface
+</li>
+</ul>
+</section>
+
+</section>
+<section>
+<section id="sec-16" >
+
+<h2>A quick (re)cap</h2>
+<p>
+Classes encapsulate functionality
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">Greeter</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(name)
+    <span style="color: #f6df92;">@name</span> = name
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">greet</span>
+    <span style="color: #ff5f87;">"Hello, </span><span style="color: #f6df92;">#{name}</span><span style="color: #ff5f87;">"</span>
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-17" >
+
+<h2>A quick recap</h2>
+<p>
+Objects can be instantiated from classes
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby">greeter = <span style="color: #b2baf6;">SayHello</span>.new(<span style="color: #ff5f87;">"Mary-Anne"</span>)
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-18" >
+
+<h2>A quick recap</h2>
+<p>
+Interface describes the set of behaviours the object exhibits
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby">greeter = <span style="color: #b2baf6;">SayHello</span>.new(<span style="color: #ff5f87;">"Mary-Anne"</span>)
+greeter.greet
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; Hello, Mary-Anne</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-19" >
+
+<h2>The Classic Patterns</h2>
+<p>
+The GoF book introduces 23 classic software patterns:
+</p>
+
+<p>
+Abstract Factory
+Builder
+Factory method
+Prototype
+Singleton
+Adapter
+Bridge
+Composite
+Decorator
+Facade
+Flyweight
+Proxy
+Chain of Responsibility
+Command
+Interpretor
+Iterator
+Mediator
+Memento
+Observer
+State
+Strategy
+Template method
+Visitor
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-20" >
+
+<h2>Another abstraction</h2>
+<p>
+In general, there are only a few classes of patterns:
+</p>
+
+<ul class="org-ul">
+<li>Creational
+</li>
+<li>Behavioural
+</li>
+<li>Structural
+</li>
+<li>Concurrency-related
+</li>
+</ul>
+</section>
+
+</section>
+<section>
+<section id="sec-21" >
+
+<h2>We'll look at a few patterns</h2>
+<p>
+&#x2026;and their implementation in Ruby
+</p>
+
+<ul class="org-ul">
+<li>A creational pattern (Factory)
+</li>
+<li>A behavioural pattern (Iterator)
+</li>
+<li>Two structural patterns (Adapter, Decorator)
+</li>
+</ul>
+</section>
+
+</section>
+<section>
+<section id="sec-22" >
+
+<h2>What is this?</h2>
+<img src="./images/take-a-number.jpg" alt="take-a-number.jpg" />
+</section>
+
+</section>
+<section>
+<section id="sec-23" >
+
+<h2>Where would you see it?</h2>
+</section>
+
+</section>
+<section>
+<section id="sec-24" >
+
+<h2>A common understanding</h2>
+<p>
+A shared understanding of a situation saves confusion and effort don't
+need to worry about the details
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-25" >
+
+<h2>It's a collection</h2>
+<p>
+Interating with it calls for an Iterator
+</p>
+
+<p>
+"Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation."
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-26" >
+
+<h2>Iterators are everywhere</h2>
+<ul class="org-ul">
+<li>Fetching lines from a file
+</li>
+<li>Fetching rows from a database
+</li>
+<li>Fetching bytes from a network socket
+</li>
+<li>Processing elements in a sequence
+</li>
+</ul>
+</section>
+
+</section>
+<section>
+<section id="sec-27" >
+
+<h2>A simple iterator</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">ArrayIterator</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(array)
+    <span style="color: #f6df92;">@array</span> = array
+    <span style="color: #f6df92;">@index</span> = 0
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">has_next?</span>
+    <span style="color: #f6df92;">@index</span> &lt; <span style="color: #f6df92;">@array</span>.length
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">next</span>
+    value = <span style="color: #f6df92;">@array</span>[<span style="color: #f6df92;">@index</span>]
+    <span style="color: #f6df92;">@index</span> += 1
+    value
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby">array = [<span style="color: #ff5f87;">'red'</span>, <span style="color: #ff5f87;">'green'</span>, <span style="color: #ff5f87;">'blue'</span>]
+i = <span style="color: #b2baf6;">ArrayIterator</span>.new(array)
+<span style="color: #5af2ee;">while</span> i.has_next?
+  <span style="color: #b2baf6;">puts</span>(<span style="color: #ff5f87;">"item: </span><span style="color: #f6df92;">#{i.next}</span><span style="color: #ff5f87;">"</span>)
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<p>
+What will this return?
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-28" >
+
+<h2>Iterator returns</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; item: red</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; item: green</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; item: blue</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-29" >
+
+<h2>Programming to an interface</h2>
+<p>
+As an advantage of Ruby's flexible dynamic typing, the array iterator
+will work with any aggregate class that has a length method and array
+index accessor.
+</p>
+
+<p>
+Strings have both.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby">i = <span style="color: #b2baf6;">ArrayIterator</span>.new(<span style="color: #ff5f87;">'abc'</span>)
+<span style="color: #5af2ee;">while</span> i.has_next?
+  <span style="color: #b2baf6;">puts</span>(<span style="color: #ff5f87;">"item: </span><span style="color: #f6df92;">#{i.next.chr}</span><span style="color: #ff5f87;">"</span>)
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; item: a</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; item: b</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; item: c</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-30" >
+
+<h2>A ticket iterator</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">TicketIterator</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(tickets_count)
+    <span style="color: #f6df92;">@tickets_count</span> = tickets_count
+    <span style="color: #f6df92;">@current_ticket</span> = 0
+  <span style="color: #5af2ee;">end</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">next</span>
+    <span style="color: #f6df92;">@current_ticket</span> += 1
+    <span style="color: #5af2ee;">if</span> <span style="color: #f6df92;">@current_ticket</span> &lt;= <span style="color: #f6df92;">@tickets_count</span>
+      <span style="color: #ff5f87;">"A</span><span style="color: #f6df92;">#{@current_ticket}</span><span style="color: #ff5f87;">"</span>
+    <span style="color: #5af2ee;">else</span>
+      <span style="color: #b2baf6;">raise</span> <span style="color: #b2baf6;">StopIteration</span>
+    <span style="color: #5af2ee;">end</span>
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby">iter = <span style="color: #b2baf6;">TicketIterator</span>.new(10)
+<span style="color: #b2baf6;">loop</span> <span style="color: #5af2ee;">do</span>
+  <span style="color: #b2baf6;">puts</span> iter.next
+<span style="color: #5af2ee;">end</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; A1</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; A2</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; A3</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; ...</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-31" >
+
+<h2>Termination</h2>
+<p>
+When iteration is finished, it returns a StopIteration exception
+</p>
+
+<p>
+Although we're raising an exception for a normal-case event, it makes
+the client code which consumes the iterator very simple
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #b2baf6;">loop</span> <span style="color: #5af2ee;">do</span>
+  <span style="color: #b2baf6;">print</span> iterator.next
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-32" >
+
+<h2>Built-in iterators</h2>
+<p>
+Ruby's in-build collection classes can return iterators
+</p>
+
+<p>
+Ruby calls these enumerators, but they're the same thing
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">AdvancedTicketDispenser</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(total_tickets)
+    <span style="color: #f6df92;">@letters</span> = (<span style="color: #ff5f87;">'A'</span>..<span style="color: #ff5f87;">'Z'</span>).to_enum
+    <span style="color: #f6df92;">@numbers</span> = (1..total_tickets).to_enum
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">next</span>
+    <span style="color: #ff5f87;">"</span><span style="color: #f6df92;">#{@letters.next}#{@numbers.next}</span><span style="color: #ff5f87;">"</span>
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby">dispenser = <span style="color: #b2baf6;">AdvancedTicketDispenser</span>.new(5)
+<span style="color: #b2baf6;">loop</span> <span style="color: #5af2ee;">do</span>
+  dispenser.next
+<span style="color: #5af2ee;">end</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; A1</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; B2</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; C3</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; ...</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-33" >
+
+<h2>Favour composition</h2>
+<p>
+Our iterator makes use of exiting objects to achieve its goals. We
+don't need to subclass a parent iterator to get the behaviour we desire.
+</p>
+
+<p>
+Two iterators are combined into one ticket iterator that drives both simultaneously.
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-34" >
+
+<h2>Internal Iterators</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">for_each_element</span>(array)
+  i = 0
+  <span style="color: #5af2ee;">while</span> i &lt; array.length
+    <span style="color: #5af2ee;">yield</span>(array[i])
+    i += 1
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-35" >
+
+<h2>Procs and Yield</h2>
+<p>
+The proc defines a block of code with one argument (elem).
+</p>
+
+<p>
+This proc is called with each element in the array by the while loop.
+</p>
+
+<p>
+Yield passes control to the proc to allow it to process the element.
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-36" >
+
+<h2>An internal iterator</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">TicketInternalDispenser</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(total_tickets)
+    <span style="color: #f6df92;">@total_tickets</span> = total_tickets
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">each</span>
+    current_ticket = 0
+    <span style="color: #5af2ee;">while</span> current_ticket &lt; <span style="color: #f6df92;">@total_tickets</span>
+      current_ticket += 1
+      <span style="color: #5af2ee;">yield</span> current_ticket
+    <span style="color: #5af2ee;">end</span>
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby">t = <span style="color: #b2baf6;">TicketInternalDispenser</span>.new(10)
+t.each <span style="color: #5af2ee;">do</span> |x|
+  <span style="color: #b2baf6;">puts</span> x
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-37" >
+
+<h2>Internal vs External iterators</h2>
+<p>
+External iterators are driven by the client calling next
+</p>
+
+<p>
+Internal iterators push the the elements to the client
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-38" >
+
+<h2>Ruby Mixins</h2>
+<p>
+Mixins allow you to incorporate functionality into your class
+</p>
+
+<p>
+The Enumerable module contains all the functionality required to
+create an external iterator from your internal iterator.
+</p>
+
+<p>
+It also provides a host of other useful methods
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-39" >
+
+<h2>Enumerable</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">SimpleTicketEnumerable</span>
+  <span style="color: #b2baf6;">include</span> <span style="color: #b2baf6;">Enumerable</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(total_tickets)
+    <span style="color: #f6df92;">@total_tickets</span> = total_tickets
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">each</span>
+    (1..<span style="color: #f6df92;">@total_tickets</span>).each { |x| <span style="color: #5af2ee;">yield</span> x }
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby">te = SimpleTicketEnumerable(3)
+te.each <span style="color: #5af2ee;">do</span> |ticket|
+  <span style="color: #b2baf6;">puts</span> ticket
+<span style="color: #5af2ee;">end</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; 1 2 3</span>
+
+enumerator = te.to_enum
+enumerator.next
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; 1</span>
+
+enumerator.next
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; 2</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-40" >
+
+<h2>Other useful methods</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby">enumerator.peek
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; 3</span>
+
+enumerator.next
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; 3</span>
+
+enumerator.rewind
+enumerator.next
+<span style="color: #f6df92;">#</span><span style="color: #efc334;">=&gt; 1</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-41" >
+
+<h2>Adapters</h2>
+</section>
+
+</section>
+<section>
+<section id="sec-42" >
+
+<h2>Adapters are everywhere!</h2>
+<img src="./images/adapter.jpg" alt="adapter.jpg" />
+</section>
+
+</section>
+<section>
+<section id="sec-43" >
+
+<h2>Adapters are everywhere!</h2>
+<img src="./images/adapter1.jpg" alt="adapter1.jpg" />
+</section>
+
+</section>
+<section>
+<section id="sec-44" >
+
+<h2>Examples of adapters</h2>
+<p>
+Convert the interface of a class into another interface clients expect
+</p>
+
+<p>
+Adapter lets classes work together that couldn't otherwise because of incompatible interfaces
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-45" >
+
+<h2>Let's square the circle</h2>
+<img src="./images/square-circle.png" alt="square-circle.png" />
+</section>
+
+</section>
+<section>
+<section id="sec-46" >
+
+<h2>Square Peg in a Round Hole</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">SquarePeg</span>
+  <span style="color: #b2baf6;">attr_reader</span> <span style="color: #3aff83;">:width</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(width)
+    <span style="color: #f6df92;">@width</span> = width
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+
+<span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">RoundPeg</span>
+  <span style="color: #b2baf6;">attr_reader</span> <span style="color: #3aff83;">:radius</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(radius)
+    <span style="color: #f6df92;">@radius</span> = radius
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+
+<span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">RoundHole</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(radius)
+    <span style="color: #f6df92;">@radius</span> = radius
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">peg_fits?</span>(peg)
+    peg.radius &lt;= radius
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-47" >
+
+<h2>Does it fit?</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby">round_hole = <span style="color: #b2baf6;">RoundHole</span>.new(10)
+
+round_peg = <span style="color: #b2baf6;">RoundPeg</span>.new(8)
+round_hole.peg_fits?(round_peg)
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; true</span>
+
+square_peg = <span style="color: #b2baf6;">SquarePeg</span>.new(8)
+square_peg.peg_fits?(square_peg)
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; NoMethodError: undefined method `peg_fits?' for #&lt;SquarePeg:0x007ff9f108fb68 @width=8&gt;</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-48" >
+
+<h2>Square Peg in a Round Hole</h2>
+<img src="./images/square-peg-round-hole.png" alt="square-peg-round-hole.png" />
+</section>
+
+</section>
+<section>
+<section id="sec-49" >
+
+<h2>Square Peg Adaptor</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">SquarePegAdaptor</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(square_peg)
+    <span style="color: #f6df92;">@peg</span> = square_peg
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">radius</span>
+    <span style="color: #b2baf6;">Math</span>.sqrt(((<span style="color: #f6df92;">@peg</span>.width / 2) ** 2) * 2)
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-50" >
+
+<h2>Testing our adaptor</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby">round_hole = <span style="color: #b2baf6;">RoundHole</span>.new(4.0)
+4.upto(7) <span style="color: #5af2ee;">do</span> |i|
+  peg = <span style="color: #b2baf6;">SquarePegAdaptor</span>.new(<span style="color: #b2baf6;">SquarePeg</span>.new(i))
+  <span style="color: #b2baf6;">puts</span> <span style="color: #ff5f87;">"Square peg of size </span><span style="color: #f6df92;">#{i}</span><span style="color: #ff5f87;"> fits: </span><span style="color: #f6df92;">#{round_hole.peg_fits?(peg)}</span><span style="color: #ff5f87;">"</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #f6df92;"># </span><span style="color: #efc334;">Square peg of size 4 fits: true</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">Square peg of size 5 fits: true</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">Square peg of size 6 fits: false</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">Square peg of size 7 fits: false</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-51" >
+
+<h2>Is there another way?</h2>
+<p>
+Yes, since Ruby allows all classes to be extended at any time.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">SquarePeg</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">radius</span>
+    <span style="color: #b2baf6;">Math</span>.sqrt(((<span style="color: #f6df92;">@peg</span>.width / 2) ** 2) * 2)
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<p>
+We can take the method from our adapter and insert it directly into
+the adapted class.
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-52" >
+
+<h2>Monkey-Patching</h2>
+<img src="./images/monkeypatch.png" alt="monkeypatch.png" />
+</section>
+
+</section>
+<section>
+<section id="sec-53" >
+
+<h2>Example use cases</h2>
+<p>
+Database connection adapters. Ideally we don't want to be concerned
+with the implementation details of diverse databases. We'd like to
+query, update and delete.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #b2baf6;">ActiveRecord</span>::<span style="color: #b2baf6;">ConnectionAdapters</span>::<span style="color: #b2baf6;">MysqlAdapter</span>
+<span style="color: #b2baf6;">ActiveRecord</span>::<span style="color: #b2baf6;">ConnectionAdapters</span>::<span style="color: #b2baf6;">PostgreSQLAdapter</span>
+<span style="color: #b2baf6;">ActiveRecord</span>::<span style="color: #b2baf6;">ConnectionAdapters</span>::<span style="color: #b2baf6;">SQLiteAdapter</span>
+</pre>
+</div>
+
+<p>
+There is also an AbstractAdapter, which serves as the base class for
+each specific adapter. The AbstractAdapter implements common
+functionality found in most databases that is customized by its
+subclasses.
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-54" >
+
+<h2>Sometimes core objects are inconsistent</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #b2baf6;">require</span> <span style="color: #ff5f87;">'date'</span>
+
+time = <span style="color: #b2baf6;">Time</span>.now
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; 2014-11-05 04:40:09 +0000</span>
+
+time.to_i
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; 1415162421</span>
+
+date = <span style="color: #b2baf6;">DateTime</span>.now
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; #&lt;DateTime: 2014-11-05T04:41:03+00:00 ((2456967j,16863s,932662000n),+0s,2299161j)&gt;</span>
+
+date.to_i
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; NoMethodError: undefined method `to_i' for</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">#&lt;DateTime:0x007fc0e10378a8&gt;</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-55" >
+
+<h2>Add method to DateTime</h2>
+<p>
+Rails achieves this by reopening the class and monkey-patching
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">DateTime</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">to_i</span>
+    seconds_since_unix_epoch.to_i
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">seconds_since_unix_epoch</span>
+    (jd - 2440588) * 86400 - offset_in_seconds + seconds_since_midnight
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">offset_in_seconds</span>
+    (offset * 86400).to_i
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">seconds_since_midnight</span>
+    sec + (min * 60) + (hour * 3600)
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby">date = <span style="color: #b2baf6;">DateTime</span>.now
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; #&lt;DateTime: 2014-11-05T04:42:14+00:00 ((2456967j,16934s,569780000n),+0s,2299161j)&gt;</span>
+
+date.to_i
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; 1415162534</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-56" >
+
+<h2>With power comes responsibility</h2>
+<p>
+Ruby offers dynamic and flexible altives to the standard design patterns
+</p>
+
+<p>
+You should use them with caution
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-57" >
+
+<h2>Decorator</h2>
+</section>
+
+</section>
+<section>
+<section id="sec-58" >
+
+<h2>Decorator</h2>
+<img src="./images/decorator.png" alt="decorator.png" />
+</section>
+
+</section>
+<section>
+<section id="sec-59" >
+
+<h2>What is it?</h2>
+<p>
+A way to wrap the behaviour of an object.
+The Decorator pattern also allows you to layer features atop one
+another so that you can construct objects that have exactly the right
+set of capabilities that you need for any given situation.
+</p>
+
+<p>
+The pattern is designed so that multiple decorators can be stacked on
+top of each other.
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-60" >
+
+<h2>How to use it</h2>
+<p>
+We have a component implementing some behaviour.
+</p>
+
+<p>
+In this example we have write<sub>line</sub> and close methods.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">SimpleWriter</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(path)
+    <span style="color: #f6df92;">@file</span> = <span style="color: #b2baf6;">File</span>.open(path, <span style="color: #ff5f87;">'w'</span>)
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">write_line</span>(line)
+    <span style="color: #f6df92;">@file</span>.print(line)
+    <span style="color: #f6df92;">@file</span>.print(<span style="color: #ff5f87;">"\n"</span>)
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">close</span>
+    <span style="color: #f6df92;">@file</span>.close
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-61" >
+
+<h2>The Decorator</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #5af2ee;">class</span> <span style="color: #b2baf6;">NumberingWriter</span>
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">initialize</span>(real_writer)
+    <span style="color: #f6df92;">@real_writer</span> = real_writer
+    <span style="color: #f6df92;">@line_number</span> = 1
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">write_line</span>(line)
+    <span style="color: #f6df92;">@real_writer</span>.write_line(<span style="color: #ff5f87;">"</span><span style="color: #f6df92;">#{@line_number}</span><span style="color: #ff5f87;">: </span><span style="color: #f6df92;">#{line}</span><span style="color: #ff5f87;">"</span>)
+    <span style="color: #f6df92;">@line_number</span> += 1
+  <span style="color: #5af2ee;">end</span>
+
+  <span style="color: #5af2ee;">def</span> <span style="color: #f09fff;">close</span>
+    <span style="color: #f6df92;">@real_writer</span>.close
+  <span style="color: #5af2ee;">end</span>
+<span style="color: #5af2ee;">end</span>
+</pre>
+</div>
+
+<p>
+And we have an example decorator. This takes the object to be
+decorated as its initialization parameter.
+</p>
+
+<p>
+It implements the method(s) to be decorated, but calls its underlying
+real writer implementation.
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-62" >
+
+<h2>Usage</h2>
+<div class="org-src-container">
+
+<pre  class="src src-ruby">writer = <span style="color: #b2baf6;">NumberingWriter</span>.new(<span style="color: #b2baf6;">SimpleWriter</span>.new(<span style="color: #ff5f87;">'test.txt'</span>))
+writer.write_line(<span style="color: #ff5f87;">'Hello there'</span>)
+writer.write_line(<span style="color: #ff5f87;">"Goodbye"</span>)
+writer.close
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-ruby"><span style="color: #f6df92;"># </span><span style="color: #efc334;">1: Hello there</span>
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">2: Goodbye</span>
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-63" >
+
+<h2>Other use cases</h2>
+<p>
+Very popular in web development where you want to compose together
+behaviours to process a request/response cycle.
+</p>
+
+<p>
+Library called Rack defines a very simple decorator pattern which is
+iused by many of the Ruby web frameworks.
+</p>
+
+<pre  class="example">
+use Rack::Lock
+use ActionController::Failsafe
+use ActionController::Reloader
+use ActionController::Session::CookieStore, #&lt;Proc:0x01b90eb4@(eval):8&gt;
+use ActionController::RewindableInput
+use ActionController::ParamsParser
+use Rack::MethodOverride
+use Rack::Head
+use ActiveRecord::ConnectionAdapters::ConnectionManagement
+use ActiveRecord::QueryCache
+run ActionController::Dispatcher.new
+</pre>
+</section>
+
+</section>
+<section>
+<section id="sec-64" >
+
+<h2>In Summary</h2>
+<ul class="org-ul">
+<li>Design patterns are desciptions of general solutions to common problems
+</li>
+<li>They provide a level of abstraction for thinking about software design
+</li>
+<li>They do not dictate a paticular implementation
+</li>
+<li>In many cases, Ruby's dynammic nature allows for an alternative implementation
+</li>
+</ul>
+</section>
+
+</section>
+<section>
+<section id="sec-65" >
+
+<h2>Questions?</h2>
+</section>
+
+</section>
+<section>
+<section id="sec-66" >
+
+<h2>Slides available</h2>
+<p>
+<a href="http://github.com/henrygarner/design-patterns.git">http://github.com/henrygarner/design-patterns.git</a>
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-67" >
+
+<h2>Homework</h2>
+<p>
+Use any of the three design patterns to we have discussed to:
+</p>
+
+<ul class="org-ul">
+<li>Iterate over a collection
+</li>
+<li>Apply a decorator chain
+</li>
+<li>Supply an adapter to cater for multiple collection types
+</li>
+</ul>
+
+<p>
+For example:
+</p>
+<ul class="org-ul">
+<li>Loop over the lines in "/usr/share/dict/words"
+</li>
+<li>Reverse all the words
+</li>
+<li>Filter out words beginning (ending) with 'g'
+</li>
+<li>Flip the words back again
+</li>
+<li>Create a proxy that allows the iterator to work on String as well as
+File objects
+</li>
+</ul>
+</section>
+</section>
+</div>
+</div>
+
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.min.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: true,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+]
+});
+</script>
+</body>
+</html>
