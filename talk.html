@@ -868,8 +868,8 @@ round_hole.peg_fits?(round_peg)
 <span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; true</span>
 
 square_peg = <span style="color: #b2baf6;">SquarePeg</span>.new(8)
-square_peg.peg_fits?(square_peg)
-<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; NoMethodError: undefined method `peg_fits?' for #&lt;SquarePeg:0x007ff9f108fb68 @width=8&gt;</span>
+round_hole.peg_fits?(square_peg)
+<span style="color: #f6df92;"># </span><span style="color: #efc334;">=&gt; NoMethodError: undefined method `radius' for #&lt;SquarePeg:0x007ff9f108fb68 @width=8&gt;</span>
 </pre>
 </div>
 </section>
