@@ -517,8 +517,8 @@ round_hole.peg_fits?(round_peg)
 # => true
 
 square_peg = SquarePeg.new(8)
-square_peg.peg_fits?(square_peg)
-# => NoMethodError: undefined method `peg_fits?' for #<SquarePeg:0x007ff9f108fb68 @width=8>
+round_hole.peg_fits?(square_peg)
+# => NoMethodError: undefined method `radius?' for #<SquarePeg:0x007ff9f108fb68 @width=8>
 #+END_SRC
 
 * Square Peg in a Round Hole
